@@ -6,8 +6,8 @@ import numpy as np
 from fastapi import FastAPI, UploadFile, File
 
 from inference.model import download_model, load_model, get_session
-from preprocess import preprocess
-from postprocess import postprocess
+from inference.preprocess import preprocess
+from inference.postprocess import postprocess
 
 app = FastAPI()
 
