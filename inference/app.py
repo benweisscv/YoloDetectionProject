@@ -43,8 +43,3 @@ async def predict(file: UploadFile = File(...)):
         "latency_ms": round(latency, 2),
         "detections": detections
     }
-
-# Use PORT environment variable
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))  # fallback 8080
-    uvicorn.run(app, host="0.0.0.0", port=port)
