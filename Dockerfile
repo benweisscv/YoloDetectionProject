@@ -6,6 +6,7 @@ WORKDIR /app
 
 COPY inference/ inference/
 COPY model/ model/
+COPY static/ static/
 
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
