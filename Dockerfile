@@ -1,12 +1,21 @@
-FROM nvidia/cuda:12.1.0-cudnn8-runtime-ubuntu22.04
+# Use a lightweight Ubuntu base
+FROM ubuntu:22.04
 
+# Set working directory
 WORKDIR /app
 
+# Prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
+    python3 \
     python3-pip \
     libgl1 \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies (CPU version)
 COPY inference/requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 

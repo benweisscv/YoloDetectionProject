@@ -2,4 +2,5 @@ fastapi
 uvicorn
 numpy
 opencv-python-headless
-onnxruntime-gpu
+onnxruntime
+google-cloud-storage
