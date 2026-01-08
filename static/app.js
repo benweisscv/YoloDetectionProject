@@ -3,21 +3,21 @@ const canvas = document.getElementById("overlay");
 const ctx = canvas.getContext("2d");
 const statusBox = document.getElementById("status");
 
-const PREDICT_URL = "/predict";
+const PREDICT_URL = "/predict"; //local
+//const PREDICT_URL = "https://yolo11-service-357754573380.us-central1.run.app/predict" //hardcoded cloud URL
 const INFERENCE_INTERVAL_MS = 200; // 5 Hz
 
 let lastLatencyMs = 0;
 
 const CLASS_NAMES = {
-  0: "person",
-  1: "car",
-  2: "truck",
-  3: "bus",
-  4: "bike",
-  5: "dog",
-  6: "cat"
+  0: "Car",
+  1: "Truck",
+  2: "Van",
+  3: "Bus",
+  4: "Trailer",
+  5: "Pedestrian",
+  6: "Bicycle"
 };
-
 
 // -------------------------
 // Camera setup

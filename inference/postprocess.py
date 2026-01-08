@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-def postprocess(outputs, scale, pad_x, pad_y, conf_thres=0.25, iou_thres=0.45):
+def postprocess(outputs, scale, pad_x, pad_y, conf_thres=0.80, iou_thres=0.45):
             # output0: (1, 12, 8400)
     preds = outputs[0][0].T  # (num_proposals, 4 + num_classes) = (12, 8400) -> (8400, 12)
     boxes_xywh = preds[:, :4]
