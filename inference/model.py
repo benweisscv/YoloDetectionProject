@@ -3,7 +3,7 @@ import numpy as np
 import onnxruntime as ort
 from google.cloud import storage
 
-MODEL_PATH = "/models/yolo11.onnx"
+MODEL_PATH = "/app/models/yolo11.onnx"
 GCS_URI = "gs://bucket.benyosefweiss.com/yolo11.onnx"
 
 session = None
@@ -40,7 +40,7 @@ def load_model():
     input_name = session.get_inputs()[0].name
 
     # 🔥 Warm-up (critical)
-    dummy = np.zeros((1, 3, 640, 640), dtype=np.float16)
+    dummy = np.zeros((1, 3, 640, 640), dtype=np.float32)
     session.run(None, {input_name: dummy})
 
     print("Model loaded & warmed up")
