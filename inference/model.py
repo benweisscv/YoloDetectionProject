@@ -3,7 +3,7 @@ import numpy as np
 import onnxruntime as ort
 from google.cloud import storage
 
-MODEL_PATH = "/app/models/yolo11.onnx"
+MODEL_PATH = "/models/yolo11.onnx"
 GCS_URI = "gs://bucket.benyosefweiss.com/yolo11.onnx"
 
 session = None
