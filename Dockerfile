@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 
 
 # Install Python dependencies (CPU version)
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r inference/requirements.txt
 
 ENV PORT=8080
 
