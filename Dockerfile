@@ -1,11 +1,8 @@
 # Use a lightweight Ubuntu base
 FROM ubuntu:22.04
 
-COPY inference/ inference/
-COPY model/ model/
-
 # Set working directory
-WORKDIR /inference
+WORKDIR /app
 
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -18,10 +15,22 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
+COPY inference/ inference/
+COPY model/ model/
+
 # Install Python dependencies (CPU version)
-COPY inference/requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 ENV PORT=8080
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "inference.app:app", "--host", "0.0.0.0", "--port", "8080"]
+
+# Set working directory to the inference folder
+WORKDIR /app/inference
+
+# Copy Python requirements
+COPY requirements.txt /app/inference/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the inference folder
+COPY inference /app/inference/
