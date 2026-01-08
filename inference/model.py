@@ -3,26 +3,27 @@ import numpy as np
 import onnxruntime as ort
 from google.cloud import storage
 
-MODEL_PATH = "/models/yolo11.onnx"
-GCS_URI = "gs://bucket.benyosefweiss.com/yolo11.onnx"
-
 session = None
 input_name = None
 
+# Paths
+BUCKET_NAME = "bucket.benyosefweiss.com"
+MODEL_BLOB = "yolo11.onnx"
+LOCAL_MODEL_PATH = "/app/model/yolo11.onnx"
+
 
 def download_model():
-    if os.path.exists(MODEL_PATH):
-        return
+    # Ensure models folder exists
+    os.makedirs("/app/model", exist_ok=True)
 
-    os.makedirs("/models", exist_ok=True)
-
-    client = storage.Client()
-    bucket_name, blob_path = GCS_URI.replace("gs://", "").split("/", 1)
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(blob_path)
-
-    blob.download_to_filename(MODEL_PATH)
-    print("Model downloaded from GCS")
+    # Download model from GCS if not exists
+    if not os.path.exists(LOCAL_MODEL_PATH):
+        client = storage.Client()
+        bucket = client.bucket(BUCKET_NAME)
+        blob = bucket.blob(MODEL_BLOB)
+        print("Downloading model from GCS...")
+        blob.download_to_filename(LOCAL_MODEL_PATH)
+        print("Model downloaded to", LOCAL_MODEL_PATH)
 
 
 def load_model():
@@ -32,7 +33,7 @@ def load_model():
     sess_opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
 
     session = ort.InferenceSession(
-        MODEL_PATH,
+        LOCAL_MODEL_PATH,
         sess_options=sess_opts,
         providers=["CPUExecutionProvider"]
     )
