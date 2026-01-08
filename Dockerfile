@@ -24,13 +24,3 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 ENV PORT=8080
 
 CMD ["uvicorn", "inference.app:app", "--host", "0.0.0.0", "--port", "8080"]
-
-# Set working directory to the inference folder
-WORKDIR /app/inference
-
-# Copy Python requirements
-COPY requirements.txt /app/inference/
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the inference folder
-COPY inference /app/inference/
