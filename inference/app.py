@@ -22,6 +22,9 @@ def startup():
 def health():
     return {"status": "ok"}
 
+@app.get("/")
+def root():
+    return {"message": "YOLO11 service is running!"}
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):

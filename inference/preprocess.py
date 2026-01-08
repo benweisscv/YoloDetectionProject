@@ -21,7 +21,7 @@ def preprocess(image_bgr):
     img, scale, pad_x, pad_y = letterbox(image_bgr)
 
     img = img[:, :, ::-1]  # BGR → RGB
-    img = img.astype(np.float16) / 255.0
+    img = img.astype(np.float32) / 255.0
     img = np.transpose(img, (2, 0, 1))
     img = np.expand_dims(img, axis=0)
 
