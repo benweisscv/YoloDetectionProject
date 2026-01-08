@@ -4,3 +4,4 @@ numpy
 opencv-python-headless
 onnxruntime
 google-cloud-storage
+python-multipart
