@@ -8,6 +8,17 @@ const INFERENCE_INTERVAL_MS = 200; // 5 Hz
 
 let lastLatencyMs = 0;
 
+const CLASS_NAMES = {
+  0: "person",
+  1: "car",
+  2: "truck",
+  3: "bus",
+  4: "bike",
+  5: "dog",
+  6: "cat"
+};
+
+
 // -------------------------
 // Camera setup
 // -------------------------
@@ -58,17 +69,22 @@ async function sendFrame() {
   lastLatencyMs = t1 - t0;
 
   const result = await response.json();
-  drawDetections(result.detections);
+  drawDetections(result.detections, result.latency_ms);
+
 }
 
 // -------------------------
 // Draw bounding boxes
 // -------------------------
-function drawDetections(detections) {
+function drawDetections(detections, latencyMs = null) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   detections.forEach(det => {
     const [x1, y1, x2, y2] = det.bbox;
+    const classId = det.class;
+    const score = det.score;
+
+    const label = CLASS_NAMES[classId] ?? `class_${classId}`;
 
     ctx.strokeStyle = "lime";
     ctx.lineWidth = 2;
@@ -77,15 +93,17 @@ function drawDetections(detections) {
     ctx.fillStyle = "lime";
     ctx.font = "16px Arial";
     ctx.fillText(
-      `${det.class_name} ${(det.confidence * 100).toFixed(1)}%`,
+      `${label} ${(score * 100).toFixed(1)}%`,
       x1,
-      Math.max(y1 - 5, 15)
+      Math.max(y1 - 6, 16)
     );
   });
 
   statusBox.textContent =
-    `Detections: ${detections.length} | Latency: ${lastLatencyMs.toFixed(0)} ms`;
+    `Detections: ${detections.length}` +
+    (latencyMs !== null ? ` | Inference: ${latencyMs.toFixed(0)} ms` : "");
 }
+
 
 // -------------------------
 // Main loop
