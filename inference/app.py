@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from fastapi import FastAPI, UploadFile, File
 
-from model import download_model, load_model, get_session
+from inference.model import download_model, load_model, get_session
 from preprocess import preprocess
 from postprocess import postprocess
 
