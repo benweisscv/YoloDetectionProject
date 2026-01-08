@@ -1,8 +1,11 @@
 # Use a lightweight Ubuntu base
 FROM ubuntu:22.04
 
+COPY inference/ inference/
+COPY model/ model/
+
 # Set working directory
-WORKDIR /app
+WORKDIR /inference
 
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -18,9 +21,6 @@ RUN apt-get update && apt-get install -y \
 # Install Python dependencies (CPU version)
 COPY inference/requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
-
-COPY inference/ inference/
-COPY model/ model/
 
 ENV PORT=8080
 
