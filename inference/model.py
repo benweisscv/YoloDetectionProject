@@ -34,7 +34,7 @@ def load_model():
     session = ort.InferenceSession(
         MODEL_PATH,
         sess_options=sess_opts,
-        providers=["CUDAExecutionProvider"]
+        providers=["CPUExecutionProvider"]
     )
 
     input_name = session.get_inputs()[0].name
