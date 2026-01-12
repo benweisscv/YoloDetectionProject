@@ -20,7 +20,7 @@ Browser (Webcam)
    │
    │  JPEG frames (HTTPS)
    ▼
-Frontend (Static Website – GoDaddy)
+Frontend (Static Website)
    │
    │  POST /predict
    ▼
